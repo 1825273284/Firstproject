@@ -10,7 +10,7 @@ import {
     Text,
     View,
     TextInput,
-    TouchableOpacity,
+    TouchableOpacity, Alert,
 } from 'react-native';
 
 import {pWidth,pHeight,pSize} from "../../user/util";
@@ -19,6 +19,29 @@ let {width,height} = Dimensions.get('window');
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome'
 
 export default class AccountLogin extends Component {
+    constructor(props){
+        super(props);
+        this.state={
+            call:''
+        }
+    }
+    Login(){
+        storage.getAllDataForKey(this.state.call).then(users => {
+            if(users.length!==0){
+                this.props.navigation.navigate('JD',{call:this.state.call,type:'Login'});
+            }else{
+                Alert.alert(
+                    '提示',
+                    '此账号未注册',
+                    [
+                        {text:'确定',style:'cancel'}
+                    ],
+                    { cancelable: false }
+                );
+            }
+            console.log(users);
+        });
+    }
     render() {
         return (
                 <View style={styles.container}>
@@ -30,16 +53,16 @@ export default class AccountLogin extends Component {
                             color={'#949494'}
                         />
                         <TextInput
-
                             style={styles.input}
                             autoCapitalize='none'  //设置首字母不自动大写
                             placeholderTextColor={'#dddddd'} //设置占位符的颜色
                             placeholder={'输入手机号'}  //设置占位符
                             keyboardType={'numeric'}         //设置为数字键盘
                             underlineColorAndroid={'#e4ebee'}
+                            onChangeText={(call)=>this.setState({call:call})}
                         />
                     </View>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={this.Login.bind(this)}>
                         <View style={styles.second}>
                             <Text style={styles.text}>获取验证码</Text>
                         </View>

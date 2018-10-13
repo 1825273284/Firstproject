@@ -26,12 +26,12 @@ export default class Mid extends Component {
                 height: pHeight(150),
             }
         });
-    }
+    };
 
     render() {
         return (
             <View style={ styles.SwiperStyles } onLayout={ this._onLayoutDidChange }>
-              <Carousel delay={ 6000 } style={ this.state.size } autoplay onAnimateNextPage={ (p) => console.log(p) } bullets={ true } bulletStyle={ { backgroundColor: '#fff',width: 7,height: 7 } }
+              <Carousel delay={ 3000 } style={ this.state.size } autoplay onAnimateNextPage={ (p) => console.log(p) } bullets={ true } bulletStyle={ { backgroundColor: '#fff',width: 7,height: 7 } }
                 chosenBulletStyle={ { backgroundColor: '#f6d574' ,width: 7,height: 7 } }>
                 { this.renderAllImage() }
               </Carousel>

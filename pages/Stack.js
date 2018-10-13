@@ -53,14 +53,6 @@ const Stack = createStackNavigator({
     },
     SetTest:{
        screen:SetTest,
-        navigationOptions:{
-            headerTitle:'设置',
-            headerTitleStyle:{
-                flex: 1,
-                textAlign:'center'
-            },
-            headerRight:React.createElement(View, null, null),
-        }
     },
     SetName:{
         screen:SetName,

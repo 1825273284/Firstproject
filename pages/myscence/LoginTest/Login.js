@@ -32,8 +32,6 @@ export default class Login extends Component {
             tabNames:['账号登录','短信登录'],
         }
     }
-
-
     render() {
         let tabNames = this.state.tabNames;
         let tabIconNames=this.state.tabIconNames;

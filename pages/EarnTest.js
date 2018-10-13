@@ -12,9 +12,49 @@ import {
 const {width,height} = Dimensions.get('window');
 import Swiper from 'react-native-swiper';
 import {pWidth,pHeight,pSize} from './user/util';
+import UShare from './user/share';
+import SharePlatform from './user/SharePlatform';
 export default class EarnTest extends Component{
     constructor(props){
         super(props);
+    }
+    Share(name) {
+        switch (name){
+            case '1':
+                UShare.share('标题', '内容', 'http://baidu.com', 'http://dev.umeng.com/images/tab2_1.png', SharePlatform.WECHAT,
+                    (code, message) => {
+                        // 分享成功：code=200
+                        // ToastAndroid.show(message,ToastAndroid.SHORT);
+
+                    });
+                break;
+            case '2':
+                UShare.share('标题', '内容', 'http://baidu.com', 'http://dev.umeng.com/images/tab2_1.png', SharePlatform.WECHAT_MOMENT,
+                    (code, message) => {
+                        // 分享成功：code=200
+                        // ToastAndroid.show(message,ToastAndroid.SHORT);
+
+                    });
+                break;
+            case '3':
+                UShare.share('标题', '内容', 'http://baidu.com', 'http://dev.umeng.com/images/tab2_1.png', SharePlatform.QQ,
+                    (code, message) => {
+                        // 分享成功：code=200
+                        // ToastAndroid.show(message,ToastAndroid.SHORT);
+
+                    });
+                break;
+            case '4':
+                UShare.share('标题', '内容', 'http://baidu.com', 'http://dev.umeng.com/images/tab2_1.png', SharePlatform.QQ_ZONE,
+                    (code, message) => {
+                        // 分享成功：code=200
+                        // ToastAndroid.show(message,ToastAndroid.SHORT);
+
+                    });
+                break;
+            default:
+                break;
+        }
     }
     render(){
         return(
@@ -26,7 +66,7 @@ export default class EarnTest extends Component{
                     <Text style={styles.textOne}>赚钱</Text>
                 </View>
                 <ScrollView>
-                    <Image source={{uri:'http://ww1.sinaimg.cn/large/005T39qagy1fvo3o5d6bvj31hc0xcdty.jpg'}}
+                    <Image source={{uri:'http://ww1.sinaimg.cn/large/005T39qaly1fw6siamwu2j30fn05u422.jpg'}}
                            style={styles.ImgOne}
                     />
                     <View style={styles.viewOne}>
@@ -50,7 +90,7 @@ export default class EarnTest extends Component{
                             <Text style={styles.textInviteOne}>最高一次可获得</Text>
                             <Text style={[styles.textInviteOne,{color:'red'}]}>66元</Text>
                         </View>
-                        <Image source={{uri:'http://ww1.sinaimg.cn/large/005T39qagy1fvo52m2w5ij30et08cgmb.jpg'}}
+                        <Image source={{uri:'http://ww1.sinaimg.cn/large/005T39qaly1fw6sjhu6l8j307t056q41.jpg'}}
                                style={styles.ImgTwo}
                         />
                         <TouchableOpacity onPress={()=>this.props.navigation.navigate('MyReward')}>
@@ -59,27 +99,27 @@ export default class EarnTest extends Component{
                         <Text style={styles.textPart}>立即注册->邀请好友->领奖啦</Text>
                         <Text style={styles.textFriend}>------------马上邀请好友得奖励---------------</Text>
                         <View style={styles.share}>
-                            <TouchableOpacity onPress={()=>{}}>
+                            <TouchableOpacity onPress={()=>this.Share('1')}>
                             <View style={styles.shareItem}>
-                                <Image style={styles.ImgThree} source={{uri:'http://ww1.sinaimg.cn/large/005T39qagy1fvo6tibqcxj30e80e8wes.jpg'}}/>
+                                <Image style={styles.ImgThree} source={{uri:'http://ww1.sinaimg.cn/large/005T39qaly1fw6sk5pnnlj302b02bmx0.jpg'}}/>
                                 <Text>微信</Text>
                             </View>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={()=>{}}>
+                            <TouchableOpacity onPress={()=>this.Share('2')}>
                                 <View style={styles.shareItem}>
-                                    <Image style={styles.ImgThree} source={{uri:'http://ww1.sinaimg.cn/large/005T39qagy1fvo6sxaq6hj30m80got8v.jpg'}}/>
+                                    <Image style={styles.ImgThree} source={{uri:'http://ww1.sinaimg.cn/large/005T39qaly1fw6skhzohij302b02bq2t.jpg'}}/>
                                     <Text>朋友圈</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={()=>{}}>
+                            <TouchableOpacity onPress={()=>this.Share('3')}>
                                 <View style={styles.shareItem}>
-                                    <Image style={styles.ImgThree} source={{uri:'http://ww1.sinaimg.cn/large/005T39qagy1fvo6sdxa4nj307107atbl.jpg'}}/>
+                                    <Image style={styles.ImgThree} source={{uri:'http://ww1.sinaimg.cn/large/005T39qaly1fw6skv2qx4j302b02ba9w.jpg'}}/>
                                     <Text>QQ</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={()=>{}}>
+                            <TouchableOpacity onPress={()=>this.Share('4')}>
                                 <View style={styles.shareItem}>
-                                    <Image style={styles.ImgThree} source={{uri:'http://ww1.sinaimg.cn/large/005T39qagy1fvo6rleighj306o06e3yd.jpg'}}/>
+                                    <Image style={styles.ImgThree} source={{uri:'http://ww1.sinaimg.cn/large/005T39qaly1fw6sle9swij302b02bwec.jpg'}}/>
                                     <Text>QQ空间</Text>
                                 </View>
                             </TouchableOpacity>
@@ -135,7 +175,7 @@ const styles = StyleSheet.create({
         marginRight:pWidth(5),
         justifyContent:'center',
         alignItems:'center',
-        borderRadius:5
+        borderRadius:5,
     },
     textInviteOne:{
        fontSize:pSize(17),
@@ -174,7 +214,8 @@ const styles = StyleSheet.create({
        justifyContent:'space-between',
        alignItems:'center',
        marginTop:pHeight(10),
-        width:pWidth(width-40)
+        width:pWidth(width-40),
+        marginBottom:pHeight(20)
     },
     shareItem:{
        justifyContent:'center',
@@ -182,8 +223,8 @@ const styles = StyleSheet.create({
     },
     ImgThree:{
        borderRadius:25,
-       width:pWidth(50),
-       height:pHeight(50),
+       width:50,
+       height:50,
        borderColor:'green'
     }
 

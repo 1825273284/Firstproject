@@ -40,10 +40,21 @@ export default class RegisterScene extends Component {
         }else if(num1 !== num2){
             Alert.alert('提示', '两次密码不一致', [{text:'确定',style:'cancel'}],);
         }else{
-            AsyncStorage.setItem('UserCall',params.call);
-            AsyncStorage.setItem('UserName',name);
-            AsyncStorage.setItem('UserCode',num1);
-            DeviceEventEmitter.emit("user",{call:params.call,name:name});
+            // AsyncStorage.setItem('UserCall',params.call);
+            // AsyncStorage.setItem('UserName',name);
+            // AsyncStorage.setItem('UserCode',num1);
+            // alert(params.call);
+            storage.save({
+               key:params.call,
+               data:{
+                   name:name,
+                   code:num2,
+                   image:null,
+                   call:params.call,
+               },
+               expires:null,
+            });
+            AsyncStorage.setItem("Call",params.call);
             this.props.navigation.navigate('Login');
         }
     };

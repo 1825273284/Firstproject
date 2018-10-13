@@ -7,18 +7,26 @@ import MyScene2 from './MyScene2';
 export default class MySceneTest extends Component{
     constructor(props) {
         super(props);
+        this.call = '默认值';
         this.state = {
-            Login:"not"
+            Login:"not",
+            call:'默认值'
         };
     }
-    componentDidMount(){
+    componentWillMount(){
         AsyncStorage.getItem('UserLogin',(error,result)=>{
             if(result === 'is'){
                 this.setState({Login:'is'})
             }
         });
+        // AsyncStorage.getItem('Call',(error,result)=>{
+        //      // this.setState({
+        //      //     call:result
+        //      // })
+        //     this.call=result;
+        // });
         this.listener = DeviceEventEmitter.addListener("Login",(e)=>{
-            this.setState({Login:e})
+            this.setState({Login:e.login,call:e.call})
         })
     }
     componentWillUnmount() {
@@ -27,11 +35,21 @@ export default class MySceneTest extends Component{
     }
     OnPress(){
         AsyncStorage.setItem('UserLogin',"not");
+        AsyncStorage.setItem('Call'," ");
         this.setState({
             Login:"not"
         });
     }
     render(){
+
+        // AsyncStorage.getItem('Call',(error,result)=>{
+        //     // this.setState({
+        //     //     call:result
+        //     // })
+        //     this.setState({
+        //         call:result
+        //     });
+        // });
         if(this.state.Login === "not"){
             return(
                 <View style={{flex:1}}>
@@ -39,11 +57,8 @@ export default class MySceneTest extends Component{
                 </View>
             );
         }else{
-            alert("登录成功");
             return(
-                <View style={{flex:1}}>
-                    <MyScene2  OnPress={()=>this.OnPress()} {...this.props}/>
-                </View>
+                    <MyScene2  OnPress={()=>this.OnPress()} call={this.state.call} {...this.props}/>
             );
         }
     }

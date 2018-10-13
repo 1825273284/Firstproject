@@ -8,7 +8,8 @@ import {
     Dimensions,
     StatusBar,
     TextInput,
-    Alert
+    Alert,
+    DeviceEventEmitter
 }from 'react-native';
 const {width,height} = Dimensions.get('window');
 import {pSize,pHeight,pWidth} from '../user/util';
@@ -25,7 +26,6 @@ export default class SetName extends Component{
     }
     Save(){
         let text = this.state.text;
-        const {params} = this.props.navigation.state;
         if(this.state.text===null){
             Alert.alert(
                 '提示',
@@ -36,7 +36,19 @@ export default class SetName extends Component{
               { cancelable: false }
             );
         }else {
-           AsyncStorage.setItem('UserName',text);
+            const {params} = this.props.navigation.state;
+            storage.save({
+                key: params.call,  // 注意:请不要在key中使用_下划线符号!
+                data:{
+                    name:text,
+                    code:params.code,
+                    image:params.image,
+                    call:params.call,
+                },
+                // 如果不指定过期时间，则会使用defaultExpires参数
+                // 如果设为null，则永不过期
+                expires:null
+            });
             Alert.alert(
                 '提示',
                 '修改成功',
@@ -45,6 +57,8 @@ export default class SetName extends Component{
                 ],
                 { cancelable: false }
             );
+            DeviceEventEmitter.emit("update","1");
+            this.props.navigation.navigate('SetTest');
         }
 
     }

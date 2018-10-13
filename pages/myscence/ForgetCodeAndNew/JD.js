@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions} from 'react-native';
+import {StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions, DeviceEventEmitter,Alert,AsyncStorage} from 'react-native';
 import {pWidth,pHeight,pSize} from  '../../user/util'
 const {width} = Dimensions.get('window');
 export default class Prove extends Component{
@@ -53,10 +53,22 @@ export default class Prove extends Component{
         console.log(this.state.text);
         if(params.type === 'new'){
             this.props.navigation.navigate('Inivate',{call: this.state.textTel});
+        }else if(params.type==='forget'){
+            this.props.navigation.navigate('SetCode',{call: this.state.textTel,choice:'First'});
         }else{
-            this.props.navigation.navigate('SetCode',{call: this.state.textTel});
+            this.Login();
         }
     }
+        Login=async()=>{
+                   const {params} = this.props.navigation.state;
+                    AsyncStorage.setItem("UserLogin","is");
+                    AsyncStorage.setItem("Call",params.call);
+
+                    console.log(params.call);
+                    DeviceEventEmitter.emit("Login",{call:params,login:'is'});
+                    this.props.navigation.navigate('TabTest');
+
+         };
 
     renderInputs() {
         let inputs = [];

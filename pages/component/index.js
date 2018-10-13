@@ -7,6 +7,9 @@ import MarqueeLabelVertical from 'react-native-lahk-marquee-label-vertical';
 let {width}=Dimensions.get('window');
 export default class Index extends Component < Props > {
 
+  foot(){
+    return <Text style={styles.foot}>没有更多数据了</Text>
+  }
   render() {
         
         let data = [];
@@ -66,7 +69,9 @@ export default class Index extends Component < Props > {
                         ListHeaderComponent={this._header}
                         showsVerticalScrollIndicator = {false} 
                         initialNumToRender={2}
+                        ListFooterComponent={this.foot()}
                         data={data}/>
+
       </View>
       </View>
     );
@@ -128,6 +133,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#f3f4f6',
       alignItems:'center'
   },
+    foot:{
+      fontSize:pSize(15),
+      marginTop:pHeight(20),
+      marginBottom:pHeight(30),
+      marginLeft:pWidth(10)
+    },
   TopView: {
     flexDirection: 'row',
     height: pHeight(45),

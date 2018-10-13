@@ -96,6 +96,9 @@ def enableProguardInReleaseBuilds = false
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
+    aaptOptions.cruncherEnabled = false
+    aaptOptions.useNewCruncher = false
+
 
     defaultConfig {
         applicationId "com.haha"
@@ -107,6 +110,14 @@ android {
             abiFilters "armeabi-v7a", "x86"
         }
     }
+     signingConfigs {
+                releaseConfig {
+                    keyPassword '13594709069zxd'
+                    storeFile file('D:/RNProject/key.jks')
+                    keyAlias 'Demo'
+                    storePassword '13594709069zxd'
+                }
+            }
     splits {
         abi {
             reset()
@@ -115,11 +126,13 @@ android {
             include "armeabi-v7a", "x86"
         }
     }
+
     buildTypes {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             matchingFallbacks = ['release', 'debug']
+             signingConfig signingConfigs.releaseConfig
         }
     }
     // applicationVariants are e.g. debug, release

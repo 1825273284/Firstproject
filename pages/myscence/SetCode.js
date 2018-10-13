@@ -8,7 +8,7 @@ import {
     Dimensions,
     StatusBar,
     TextInput,
-    Alert
+    Alert, DeviceEventEmitter
 } from 'react-native';
 const {width,height} = Dimensions.get('window');
 import {pSize,pHeight,pWidth} from '../user/util';
@@ -34,17 +34,33 @@ export default class SetCode extends Component{
 
         }else{
             if(Two===One){
-               AsyncStorage.setItem('UserCode',Two,(error)=>{
-                   if(!error){
-                       Alert.alert(
-                           '提示',
-                           '修改成功',
-                           [
-                               {text:'确定',style:'cancel'}
-                           ],
-                       );
-                   }
-               })
+                const {params} = this.props.navigation.state;
+                storage.save({
+                    key: params.call,  // 注意:请不要在key中使用_下划线符号!
+                    data:{
+                        name:params.name,
+                        code:Two,
+                        image:params.image,
+                        call:params.call,
+                    },
+                    // 如果不指定过期时间，则会使用defaultExpires参数
+                    // 如果设为null，则永不过期
+                    expires:null
+                });
+                Alert.alert(
+                    '提示',
+                    '修改成功',
+                    [
+                        {text:'确定',style:'cancel'}
+                    ],
+                );
+                DeviceEventEmitter.emit("update","1");
+                if(params.choice === "First"){
+                    this.props.navigation.navigate("Login");
+                }else{
+                    this.props.navigation.navigate("SetTest");
+                }
+
             }else{
                 Alert.alert(
                     '提示',
